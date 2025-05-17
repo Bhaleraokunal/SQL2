@@ -1,0 +1,125 @@
+--SUBSTR:= "EXTRACT A PORTION OF A STRING FROM A DEFINED STARTING POINT FOR A GIVEN LENGTH" AND IT TAKE THE 3 ARGURMENTS.
+SQL> 
+SQL> --SYNTAX := SUBSTR (ARG1,ARG2,ARG3).
+SQL> 
+SQL> --EXAMPLES :
+SQL> --1)
+SQL> SELECT SUBSTR ('MILLER', 2,3)
+  2  FROM EMP;
+
+SUB                                                                                                                                                                                                                                                                                                                                                                                                            
+---                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+ILL                                                                                                                                                                                                                                                                                                                                                                                                            
+
+14 rows selected.
+
+SQL> --2)
+SQL> SELECT SUBSTR ('KUNAL', 1,4)
+  2  FROM DUAL;
+
+SUBS                                                                                                                                                                                                                                                                                                                                                                                                           
+----                                                                                                                                                                                                                                                                                                                                                                                                           
+KUNA                                                                                                                                                                                                                                                                                                                                                                                                           
+
+SQL> --3)
+SQL> SELECT SUBSTR ('JALGAON')
+  2  FROM DUAL;
+SELECT SUBSTR ('JALGAON')
+       *
+ERROR at line 1:
+ORA-00938: not enough arguments for function 
+
+
+SQL> edit
+Wrote file afiedt.buf
+
+  1  SELECT SUBSTR ('JALGAON',1)
+  2* FROM DUAL
+SQL> /
+
+SUBSTR(                                                                                                                                                                                                                                                                                                                                                                                                        
+-------                                                                                                                                                                                                                                                                                                                                                                                                        
+JALGAON                                                                                                                                                                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> --4)
+SQL> SELECT SUBSTR ('BHUSAWAL', 1,1)
+  2  FROM DUAL;
+
+S                                                                                                                                                                                                                                                                                                                                                                                                              
+-                                                                                                                                                                                                                                                                                                                                                                                                              
+B                                                                                                                                                                                                                                                                                                                                                                                                              
+
+SQL> --5)
+SQL> SELECT SUBSTR('BHALERAO',6) AS LAST_THREE_CHAR
+  2  FROM DUAL;
+
+LAS                                                                                                                                                                                                                                                                                                                                                                                                            
+---                                                                                                                                                                                                                                                                                                                                                                                                            
+RAO                                                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> --6
+SQL> SELECT SUBSTR ('PUNE',-1,1)
+  2  FROM DUAL;
+
+S                                                                                                                                                                                                                                                                                                                                                                                                              
+-                                                                                                                                                                                                                                                                                                                                                                                                              
+E                                                                                                                                                                                                                                                                                                                                                                                                              
+
+SQL> --7)
+SQL> SELECT SUBSTR ('PUNE',-2,1)
+  2  FROM DUAL;
+
+S                                                                                                                                                                                                                                                                                                                                                                                                              
+-                                                                                                                                                                                                                                                                                                                                                                                                              
+N                                                                                                                                                                                                                                                                                                                                                                                                              
+
+SQL> --8)
+SQL> SELECT SUBSTR ('PUNE',-2,2)
+  2  FROM DUAL;
+
+SU                                                                                                                                                                                                                                                                                                                                                                                                             
+--                                                                                                                                                                                                                                                                                                                                                                                                             
+NE                                                                                                                                                                                                                                                                                                                                                                                                             
+
+SQL> 
+SQL> 
+SQL> 
+SQL> --*) WAQTD ALL THE DETAILS OF EMPLOYEE IF THE EMPLOYEE NAME START WITH A
+  1  SELECT *
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,1,1) = 'A';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                                                                                                                                                                                                                          
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                                                                                                                                                                                                                          
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                                                                                                                                                                                                                          
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                                                                                                                                                                                                                          
+
+SQL> 
+SQL> 
+SQL> 
+SQL> --*) WAQTD ALL THE DETAILS OF EMPLOYEE IF THE EMPLOYEE NAME START WITH VOWELS ?
+SQL> 
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SUBSTR(ENAME,1,1) IN ('A','I','O','U','E');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                                                                                                                                                                                                                          
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                                                                                                                                                                                                                          
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                                                                                                                                                                                                                          
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                                                                                                                                                                                                                          
+
+SQL> 
