@@ -1,0 +1,84 @@
+DML ( Data Manipulation language)
+	1) UPDATE 
+		Syntax :
+			UPDATE  TABLE_NAME
+			SET COL_NAME = VALUE
+			WHERE  <CONDITION>
+			WHERE  <CONDITION>
+		Example:
+			UPDATE   EMP
+			SET  SAL = SAL*110/100
+			WHERE   DEPTNO = 10;
+Q1)  WAQ  TO UPDATE THE COMMISSION TO 1000 IF THEY ARE NUL 
+	UPDATE EMP
+	SET NUL(COMM,0);
+Q2) WAQ TO UPDATE THE COMMISSION 200 IF THE EMPLOYEE ARE WOROKING IN NEW YORK?
+	UPDATE EMP
+	SET COMM = COMM + 200
+	WHERE DEPTNO IN (SELECT DEPTNO
+				FROM DEPT
+				WHERE LOC = ‘NEW YORK’);
+Q3) WAQ TO UPDATE THE EMPLOYEE SALARY TO 20% INCREMENT IF THEY ARE REPORTING TO BLACK?
+Q4) WAQ TO UPDATE FOR TOP TWO EMPLOYEE BASED ON SALARY 10% INCREMENT?
+
+•	DELETE :
+o	Syntax:
+	From TABLE
+WHERE CONDITION;
+Q1) DELETE THE CHICAGO LOC FROM THE EMPLOYEE TABLE ?
+	DELETE
+	FROM EMP
+	WHERE DEPTNO = ( SELECT DEPTNO
+				FROM DEPT
+				WHERE LOC = ‘CHICAGO’);
+•	TRANSECTION :
+•	ROLLBACK : 
+	"ROLLBACK is used to reverse accidental UPDATE or DELETE operations, but only if they were not committed yet."
+•	COMMIT : 
+	COMMIT is a SQL command used to permanently save all changes made during the current transaction into the database.
+
+•	SAVEPOINT : 
+	SAVEPOINT is a command that lets you set a point within a transaction to which you can roll back without undoing the entire transaction, before the commit.
+•	Example :
+	Savepoint s1
+	Rollback to s1;
+•	CASE :
+
+1)
+SELECT ENAME, SAL,
+  CASE 
+    WHEN TO_CHAR(HIREDATE, 'D') IN ('2','4','6') THEN
+      '*' || SUBSTR(ENAME, 2, LENGTH(ENAME) - 1) || '*'
+    WHEN TO_CHAR(HIREDATE, 'D') IN ('3','5','7') THEN
+      SUBSTR(ENAME, 1, 1) || '*' ||
+      SUBSTR(ENAME, 3, LENGTH(ENAME) - 2) || '*' ||
+      SUBSTR(ENAME, LENGTH(ENAME), 1)
+    ELSE 'NULL'
+  END AS MODIFIED_NAME
+FROM EMP;
+2)
+	SELECT ENAME,SAL
+	CASE
+		WHEN SAL < 2000 THEN ‘WORST SAL’
+		WHEN SAL > 2000 THEN ‘BEST SAL’
+	ELSE ‘NULL’
+	END
+	FROM EMP;
+
+3) IF THE NAME IS EVEN THEN *-----* AND IF THE NAME IS ODD THEN -*----*-
+	SELECT ENAME,
+       CASE
+         WHEN LENGTH(ENAME) % 2 = 0 THEN REPLACE(ENAME, SUBSTR(ENAME, 1, 1), '*')
+         WHEN LENGTH(ENAME) % 2 != 0 THEN REPLACE(ENAME, SUBSTR(ENAME, -1), '*')
+         ELSE 'NULL'
+       END AS MODIFIED_NAME
+FROM EMP;
+	USIND MODE 
+•	SELECT ENAME,
+•	       CASE
+•	         WHEN MOD(LENGTH(ENAME), 2) = 0 THEN REPLACE(ENAME, SUBSTR(ENAME, 1, 1), '*')
+•	         WHEN MOD(LENGTH(ENAME), 2) = 1 THEN REPLACE(ENAME, SUBSTR(ENAME, -1), '*')
+•	         ELSE 'NULL'
+•	       END AS MODIFIED_NAME
+•	FROM EMP;
+
