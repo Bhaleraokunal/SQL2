@@ -1,0 +1,61 @@
+SQL> ---*) WAQTD DEPARTMENT NAME IF THE DEPARTMENT DOESN'T HAVE ANY EMPLOYEE IN IT ?
+SQL> 
+SQL> ---UISNG THE "NOT IN" OPERATOR
+SQL> 
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO NOT IN ( SELECT DEPTNO
+  4                        FROM EMP);
+
+DNAME                                                                                               
+--------------                                                                                      
+OPERATIONS                                                                                          
+
+SQL> 
+SQL> 
+SQL> ----USING THE NOT EXISTS
+SQL> 
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE NOT EXISTS ( SELECT DEPTNO
+  4                     FROM EMP
+  5                     WHERE EMP.DEPTNO = DEPT.DEPTNO);
+
+DNAME                                                                                               
+--------------                                                                                      
+OPERATIONS                                                                                          
+
+SQL> 
+SQL> 
+SQL> ---*) WAQTD DEPARTMENT NAME IS THE DEPARTMENT HAS SOME EMPLYOEE IN IT ?
+SQL> 
+SQL> ----USING THE "IN" OPERATOR
+SQL> 
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN ( SELECT DEPTNO
+  4                    FROM EMP);
+
+DNAME                                                                                               
+--------------                                                                                      
+ACCOUNTING                                                                                          
+RESEARCH                                                                                            
+SALES                                                                                               
+
+SQL> 
+SQL> 
+SQL> -----USING THE EXISTS
+SQL> 
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE EXISTS ( SELECT DEPTNO
+  4                 FROM EMP
+  5                 WHERE EMP.DEPTNO = DEPT.DEPTNO);
+
+DNAME                                                                                               
+--------------                                                                                      
+ACCOUNTING                                                                                          
+RESEARCH                                                                                            
+SALES                                                                                               
+
+SQL> 
