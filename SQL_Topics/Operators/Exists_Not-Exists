@@ -1,1 +1,16 @@
+EXISTS and NOT EXISTS in SQL
+1) Definition :
+    EXISTS: Checks if a subquery returns any rows. Returns TRUE if at least one row exists.
 
+     NOT EXISTS: Checks if a subquery returns no rows. Returns TRUE if no rows exist.
+
+* Syntax :
+-- EXISTS  
+SELECT columns  
+FROM table1  
+WHERE EXISTS (subquery);  
+
+-- NOT EXISTS  
+SELECT columns  
+FROM table1  
+WHERE NOT EXISTS (subquery);  
