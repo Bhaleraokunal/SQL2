@@ -1,0 +1,586 @@
+SQL> --- WAQTD DETAILS OF AN EMP EARNING LESS THAN 'KING'
+SQL> SELECT *
+WHERE JOB IN ( SELECT JOB
+  3  WHERE SAL> ( SELECT SAL
+  4               FROM EMP
+  5               WHERE ENAME = 'KING');
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+WHERE HIREDATE < ( SELECT HIREDATE FROM EMP WHERE ENAME = 'TURNER');
+  1  SELECT *
+  2  FROM EMP
+  3  WHERE SAL< ( SELECT SAL
+  4               FROM EMP
+  5*              WHERE ENAME = 'KING')
+WHERE SAL < ( SELECT SAL FROM EMP WHERE EMPNO = 7839);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+12 rows selected.
+
+SQL> --WAQTD DETAILS OF EMP’S WHO ARE WORKING IN SAME DESIGNATION 
+SQL> --AS THAT OF ‘FORD’.
+SQL> 
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB IN ( SELECT JOB
+  4                 FROM EMP 
+  5                 WHERE ENAME ='FORD');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+
+SQL>  WAQTD DETAILS OF EMP’S WHO ARE WORKING IN SAME DEPT AS THAT 
+SP2-0734: unknown command beginning "WAQTD DETA..." - rest of line ignored.
+SQL> OF KING.
+SP2-0042: unknown command "OF KING." - rest of line ignored.
+SQL> 
+SQL> --- WAQTD DETAILS OF EMP’S WHO ARE WORKING IN SAME DEPT AS THAT 
+SQL> -- OF KING
+SQL> 
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO IN ( SELECT DEPTNO
+  4                    FROM EMP
+  5                    WHERE ENAME = 'KING');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+
+SQL> --- WAQTD DETAILS OF EMP’S HIRED AFTER ‘WARD’. 
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE HIREDATE > ( SELECT HIREDATE
+  4                     FROM EMP 
+  5                     WHERE ENAME = 'WARD');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+10 rows selected.
+
+SQL> -- WAQTD NAMES OF AN EMP WORKING AS SALESMAN & EARNING LESS 
+SQL> -- THAN MARTIN
+SQL> 
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE JOB = 'SALESMAN' AND SAL < ( SELECT SAL
+  4                                     FROM EMP
+  5                                     WHERE ENAME = 'MARTIN');
+
+no rows selected
+
+SQL> --WAQTD DETAILS OF EMP’S WHO ARE EARNING MORE THAN ‘JAMES’ & 
+SQL> -- LESS THAN JONES
+SQL> 
+SQL> SELECT *
+  2  FROM EMO
+  3  WHERE SAL > ( SELECT SAL
+  4                FROM EMP
+  5                WHERE ENAME = 'JAMES') AND SAL < ( SELECT SAL
+  6                                                   FROM EMP
+  7                                                   WHERE ENAME = 'JONES');
+FROM EMO
+     *
+ERROR at line 2:
+ORA-00942: table or view does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3  WHERE SAL > ( SELECT SAL
+  4                FROM EMP
+  5                WHERE ENAME = 'JAMES') AND SAL < ( SELECT SAL
+  6                                                   FROM EMP
+  7*                                                  WHERE ENAME = 'JONES')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+7 rows selected.
+
+SQL> -- WAQTD NAMES OF EMP & SAL OF THE EMPS EARNING LESS THAN KING.
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL < ( SELECT SAL
+  4                FROM EMP
+  5                WHERE ENAME = 'KING');
+
+ENAME
+----------
+SMITH
+ALLEN
+WARD
+JONES
+MARTIN
+BLAKE
+CLARK
+SCOTT
+TURNER
+JAMES
+FORD
+MILLER
+
+12 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, SAL
+  2  FROM EMP
+  3  WHERE SAL < ( SELECT SAL
+  4                FROM EMP
+  5*               WHERE ENAME = 'KING')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+TURNER           1500
+JAMES             950
+FORD             3000
+MILLER           1300
+
+12 rows selected.
+
+SQL> --WAQTD NAMES OF EMP & SAL OF THE EMPS EARNING LESS THAN 
+SQL> --ADAMS
+SQL> 
+SQL> SELECT ENAME, SA;
+
+-- Question 1
+SELECT ENAME, SA
+               *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT ENAME, SAL 
+  2  FROM EMP
+  3  WHERE SAL< (SELECT SAL 
+  4              FROM EMP
+  5              WHERE ENAME = ADAMS);
+            WHERE ENAME = ADAMS)
+                          *
+ERROR at line 5:
+ORA-00904: "ADAMS": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, SAL
+  2  FROM EMP
+  3  WHERE SAL< (SELECT SAL
+  4              FROM EMP
+  5*             WHERE ENAME = 'ADAMS')
+SQL> /
+
+no rows selected
+
+SQL> ---WAQTD NAME & DEPTNO OF THE EMP IF THEY ARE WORKING IN THE 
+SQL> --SAME DEPT AS JONES.
+SQL> SELECT ENAME, DEPTNO 
+  2  FROM EMP
+  3  WHERE DEPTNO IN ( SELECT DEPTNO
+  4                    FROM EMP
+  5                    WHERE ENAME= 'JAMES');
+
+ENAME          DEPTNO
+---------- ----------
+JAMES              30
+TURNER             30
+BLAKE              30
+MARTIN             30
+WARD               30
+ALLEN              30
+
+6 rows selected.
+
+SQL> -- WAQTD NAME & JOB OF ALL THE EMP’S WORKING IN THE SAME DESIGNATION AS JAMES
+SQL> SELECT ENAME, JOB 
+  2  FROM EMP
+  3  WHERE JOB IN ( SELECT 
+  4                 FROM EMP
+  5                 WHERE ENAME = 'JAMES');
+               FROM EMP
+               *
+ERROR at line 4:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, JOB
+  2  FROM EMP
+  3  WHERE JOB IN ( SELECT JOB
+  4                 FROM EMP
+  5*                WHERE ENAME = 'JAMES')
+SQL> /
+
+ENAME      JOB
+---------- ---------
+MILLER     CLERK
+JAMES      CLERK
+SMITH      CLERK
+
+SQL> --WAQTD EMPNO & ENAME ALONG WITH ANNUAL SAL OF ALL THE EMPS 
+SQL> --IF THEIR ANNUAL SAL IS GREATER THAN ‘WARD’ ANNUAL SAL. 
+SQL> SELECT EMPNO , SAL*12 AS ANNUAL_SAL
+  2  FROM EMP
+  3  WHERE SAL*12 > ( SELECT SAL*12
+  4                   FROM EMP
+  5                   WHERE ENAME = 'WARD');
+
+     EMPNO ANNUAL_SAL
+---------- ----------
+      7499      19200
+      7566      35700
+      7698      34200
+      7782      29400
+      7788      36000
+      7839      60000
+      7844      18000
+      7902      36000
+      7934      15600
+
+9 rows selected.
+
+SQL> --WAQTD NAME & HIREDATE OF EMP’S IF THEY HIRED BEFORE TURNER.
+SQL> SELECT ENAME, HIREDATE 
+  2  FROM EMP
+  3  WHERE HIREDATE < ( SELECT HIRDEATE
+  4                     FROM EMP
+  5                     WHERE ENAME = 'TURNER');
+WHERE HIREDATE < ( SELECT HIRDEATE
+                          *
+ERROR at line 3:
+ORA-00904: "HIRDEATE": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, HIREDATE
+  2  FROM EMP
+  3  WHERE HIREDATE < ( SELECT HIREDEATE
+  4                     FROM EMP
+  5*                    WHERE ENAME = 'TURNER')
+SQL> /
+WHERE HIREDATE < ( SELECT HIREDEATE
+                          *
+ERROR at line 3:
+ORA-00904: "HIREDEATE": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, HIREDATE
+  2  FROM EMP
+  3  WHERE HIREDATE < ( SELECT HIREDATE
+  4                     FROM EMP
+  5*                    WHERE ENAME = 'TURNER')
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+SMITH      17-DEC-80
+ALLEN      20-FEB-81
+WARD       22-FEB-81
+JONES      02-APR-81
+BLAKE      01-MAY-81
+CLARK      09-JUN-81
+
+6 rows selected.
+
+SQL> --WAQTD NAME & HIREDATE OF EMP’S IF THEY ARE HIRED AFTER 
+SQL> --PRESIDENT
+SQL> 
+SQL> SELECT ENAME , HIREDATE
+  2  FROM EMP
+  3  WHERE HIREDATE > ( SELECT HIREDATE 
+  4                     FROM EMP
+  5                     WHERE JOB = 'PRESIDENT');
+
+ENAME      HIREDATE
+---------- ---------
+SCOTT      19-APR-87
+JAMES      03-DEC-81
+FORD       03-DEC-81
+MILLER     23-JAN-82
+
+SQL> --WAQTD NAME & SAL OF EMPS IF THEY ARE EARNING SAL LESS THAN 
+SQL> --HE EMP WHOSE EMPNO IS 7839.
+SQL> SELECT ENAME , SAL 
+  2  FROM EMP
+  3  WHERE SAL < ( SELECT SAL
+  4                FROM EMP
+  5                WHERE EMPNO - 7839);
+              WHERE EMPNO - 7839)
+                                *
+ERROR at line 5:
+ORA-00920: invalid relational operator
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME , SAL
+  2  FROM EMP
+  3  WHERE SAL < ( SELECT SAL
+  4                FROM EMP
+  5*               WHERE EMPNO =7839)
+SQL> /
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+TURNER           1500
+JAMES             950
+FORD             3000
+MILLER           1300
+
+12 rows selected.
+
+SQL> ---WAQTD DETAILS OF EMP IF EMP IS HIRED BEFORE MILLER.
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE HIREDATE
+  4  < ( SELECT HIREDATE
+  5      FROM EMP
+  6      WHERE ENAME =  'MILLER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+11 rows selected.
+
+SQL> -- WAQTD DETAILS OF EMP WHO EARNS MORE THAN ALLEN.
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SAL > ( SELECT SAL
+  4                FROM EMP
+  5                WHERE ENAME = 'ALLEN');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+6 rows selected.
+
+SQL> --WAQTD NUMBER OF EMP’S HIRED AFTER KING.
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE HIREDATE > (SELECT HIREDATE
+  4                    FROM EMP
+  5                    WHERE ENAME = 'KING');
+
+  COUNT(*)
+----------
+         4
+
+SQL> -- WAQTD TOTAL SAL GIVEN TO EMP’S WORKING IN SAME DEPT AS THAT 
+SQL> --OF ‘WARD’. 
+SQL> SELECT  SUM(SAL)
+  2  FROM EMP
+  3  WHERE DEPTNO IN ( SELECT DEPTNO
+  4                    FROM EMP
+  5                    WHERE ENAME = 'WARD');
+
+  SUM(SAL)
+----------
+      9400
+
+SQL> --WAQTD DETAILS OF EMP WORKING IN DEPT NO 20 & WORKING IN 
+SQL> --SAME DESIGNATION AS THAT OF SMITH. 
+SQL> 
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO  = 20 AND JOB IN ( SELECT JOB 
+  4                                  FROM EMP
+  5                                  WHERE ENAME = 'SMITH');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+
+SQL> --WAQTD ENAME & SAL OF EMP’S WHO ARE EARNING MORE THAN 
+SQL> --MILLER BUT LESS THAN ALLEN. 
+SQL> 
+SQL> SELECT ENAME, SAL 
+  2  FROM EMP
+  3  WHERE SAL > ( SELECT SAL 
+  4                FROM EMP
+  5                WHERE ENAME = 'MILLER') AND SAL < ( SELECT SAL
+  6                                                    FROM EMP
+  7                                                    WHERE ENAME = 'ALLEN');
+
+ENAME             SAL
+---------- ----------
+TURNER           1500
+
+SQL> -- WAQTD ENAME & SAL OF ALL THE EMPS WHO ARE EARNING MORE 
+SQL> -- THAN 1000 BUT LESS THAN 3000. 
+SQL> 
+SQL> SELECT ENAME, SAL 
+  2  FROM EMP
+  3  WHERE SAL BETWEEN 1000 AND 3000;
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+TURNER           1500
+FORD             3000
+MILLER           1300
+
+10 rows selected.
+
+SQL> -- WAQTD ALL THE DETAILS OF EMP WORKING IN DEPT NO 20 & WORKING 
+SQL> -- IN SAME DESIGNATION AS SMITH.
+SQL> 
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO = 20 AND JOB IN ( SELECT JOB
+  4                                 FROM EMP
+  5                                 WHERE ENAME = 'SMITH');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+
+SQL> --WAQTD DETAILS OF EMP WORKING AS MANAGER IN THE SAME DEPT AS 
+SQL> --TURNER
+SQL> 
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB = 'MANAGER'  AND DEPTNO = ( SELECT DEPTNO 
+  4                                        FROM EMP
+  5                                        WHERE ENAME = 'TURNER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+SQL> --WAQTD NAME & HIREDATE OF EMP’S HIRED AFTER 1980 & BEFORE 
+SQL> -- KING 
+SQL> 
+SQL> SELECT ENAME , HIREDATE
+  2  FROM EMP
+  3  WHERE HIREDATE NOT BETWEEN '31-DEC-1980' AND (SELECT HIREDATE
+  4                                                FROM EMP
+  5                                                WHERE ENAME = 'KING');
+
+ENAME      HIREDATE
+---------- ---------
+SMITH      17-DEC-80
+SCOTT      19-APR-87
+JAMES      03-DEC-81
+FORD       03-DEC-81
+MILLER     23-JAN-82
+
+SQL> 
+SQL> 
+SQL> --- WAQTD NAME & SAL ALONG WITH ANNUAL SAL FOR ALL EMP’S WHOSE 
+SQL> --SAL IS LESS THAN BLAKE OR EMP’S EARNING MORE THAN 3500.
+SQL> 
+SQL> SELECT ENAME, SAL , SAL* 12 
+  2  FROM EMP
+  3  WHERE SAL < ( SELECT SAL
+  4                FROM EMP
+  5                WHERE ENAME = 'BLAKE') OR SAL > 3500;
+
+ENAME             SAL     SAL*12
+---------- ---------- ----------
+SMITH             800       9600
+ALLEN            1600      19200
+WARD             1250      15000
+MARTIN           1250      15000
+CLARK            2450      29400
+KING             5000      60000
+TURNER           1500      18000
+JAMES             950      11400
+MILLER           1300      15600
+
+9 rows selected.
+
+SQL> 
