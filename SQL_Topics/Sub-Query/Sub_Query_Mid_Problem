@@ -1,0 +1,182 @@
+-- SUB QUERY CASE 2 - CLEAN SOLUTIONS
+
+-- 1. WAQTD DEPARTMENT NAME OF EMP WHOSE DESIGNATION IS PRESIDENT
+SELECT DNAME
+FROM DEPT
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM EMP
+                  WHERE JOB IN ( SELECT JOB
+                                 FROM EMP
+                                 WHERE JOB = 'PRESIDENT'));
+
+-- Result: ACCOUNTING
+
+-- 2. WAQTD EMPLOYEE NAME OF EMP WORKING IN ACCOUNTING DEPARTMENT
+SELECT ENAME
+FROM EMP
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM DEPT
+                  WHERE DNAME IN ( SELECT DNAME
+                                   FROM DEPT
+                                   WHERE DNAME = 'ACCOUNTING'));
+
+-- Result: MILLER, KING, CLARK
+
+-- 3. WAQTD EMPLOYEE NAME & SALARY OF EMP'S WHO ARE WORKING IN CHICAGO
+SELECT ENAME, SAL
+FROM EMP
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM DEPT
+                  WHERE LOC IN ( SELECT LOC
+                                 FROM DEPT
+                                 WHERE LOC = 'CHICAGO'));
+
+-- Result: JAMES 950, TURNER 1500, BLAKE 2850, MARTIN 1250, WARD 1250, ALLEN 1600
+
+-- 4. WAQTD DETAILS OF AN EMP WHOSE WORKING IN SALES DEPARTMENT
+SELECT *
+FROM EMP
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM DEPT
+                  WHERE DNAME IN ( SELECT DNAME
+                                   FROM DEPT
+                                   WHERE DNAME = 'SALES'));
+
+-- Result: 6 employees from SALES department
+
+-- 5. WAQTD DETAILS OF EMP ALONG WITH ANNUAL SAL IF EMP'S ARE WORKING IN NEW YORK
+SELECT EMP.*, SAL*12 AS ANNUAL_SAL
+FROM EMP
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM DEPT
+                  WHERE LOC IN ( SELECT LOC
+                                 FROM DEPT
+                                 WHERE LOC = 'NEW YORK'));
+
+-- Result: MILLER 15600, KING 60000, CLARK 29400
+
+-- 6. WAQTD EMPLOYEE NAME OF EMP WORKING IN OPERATIONS DEPARTMENT
+SELECT ENAME
+FROM EMP
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM DEPT
+                  WHERE DNAME IN ( SELECT DNAME
+                                   FROM DEPT
+                                   WHERE DNAME = 'OPERATIONS'));
+
+-- Result: no rows selected
+
+-- 7. WAQTD NAME OF EMP EARNING MORE THAN SCOTT IN ACCOUNTING DEPARTMENT
+SELECT ENAME
+FROM EMP
+WHERE SAL > ( SELECT SAL
+              FROM EMP
+              WHERE ENAME = 'SCOTT') AND DEPTNO IN ( SELECT DEPTNO
+                                                     FROM DEPT
+                                                     WHERE DNAME IN ( SELECT DNAME
+                                                                      FROM DEPT
+                                                                      WHERE DNAME='ACCOUNTING'));
+
+-- Result: KING
+
+-- 8. WAQTD DETAILS OF EMP WORKING AS MANAGER IN CHICAGO
+SELECT *
+FROM EMP
+WHERE JOB = 'MANAGER' AND DEPTNO IN ( SELECT DEPTNO
+                                      FROM DEPT
+                                      WHERE LOC IN ( SELECT LOC
+                                                     FROM DEPT
+                                                     WHERE LOC = 'CHICAGO'));
+
+-- Result: BLAKE (Manager details)
+
+-- 9. WAQTD NAME & SALARY OF EMP'S EARNING MORE THAN KING IN ACCOUNTING DEPARTMENT
+SELECT ENAME,SAL
+FROM EMP
+WHERE SAL > ( SELECT SAL
+             FROM EMP
+             WHERE ENAME = 'KING') AND DEPTNO IN ( SELECT DEPTNO
+                                                  FROM DEPT
+                                                  WHERE DNAME IN ( SELECT DNAME
+                                                                   FROM DEPT
+                                                                   WHERE DNAME = 'ACCOUNTING'));
+
+-- Result: no rows selected
+
+-- 10. WAQTD DETAILS OF EMP WHO IS WORKING AS SALESMAN IN SALES DEPARTMENT
+SELECT *
+FROM EMP
+WHERE JOB = 'SALESMAN' AND DEPTNO IN ( SELECT DEPTNO
+                                      FROM DEPT
+                                      WHERE DNAME IN ( SELECT DNAME
+                                                      FROM DEPT
+                                                      WHERE DNAME = 'SALES'));
+
+-- Result: TURNER, MARTIN, WARD, ALLEN (4 salesmen)
+
+-- 11. WAQTD NAME, SAL, JOB, HIREDATE OF EMP'S WORKING IN OPERATION DEPARTMENT & HIRED BEFORE KING
+SELECT ENAME, SAL, JOB, HIREDATE
+FROM EMP
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM DEPT
+                  WHERE DNAME IN ( SELECT DNAME
+                                   FROM DEPT
+                                   WHERE DNAME = 'OPERATIONS')) AND HIREDATE < ( SELECT HIREDATE
+                                                                                FROM EMP
+                                                                                WHERE ENAME = 'KING');
+
+-- Result: no rows selected
+
+-- 12. WAQTD ALL THE EMP'S WHOSE DEPARTMENT NAME ENDING WITH 'S'
+SELECT *
+FROM EMP
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM DEPT
+                  WHERE DNAME LIKE '%S');
+
+-- Result: ALLEN, WARD, MARTIN, BLAKE, TURNER, JAMES (6 employees)
+
+-- 13. WAQTD DEPARTMENT NAME OF EMP'S WHOSE SAL IS 800
+-- CORRECTED VERSION (Original had SAL > 800)
+SELECT DNAME
+FROM DEPT
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM EMP
+                  WHERE SAL = 800);
+
+-- Result: RESEARCH
+
+-- 14. WAQTD DNAME & LOC OF EMP'S WHOSE NAME HAS CHARACTER 'A' IN IT
+SELECT DNAME, LOC
+FROM DEPT
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM EMP
+                  WHERE ENAME LIKE '%A%');
+
+-- Result: ACCOUNTING NEW YORK, SALES CHICAGO
+
+-- 15. WAQTD DEPT NAME OF AN EMP WHO EARNS COMMISSION
+SELECT DNAME
+FROM DEPT
+WHERE DEPTNO IN ( SELECT DEPTNO
+                  FROM EMP
+                  WHERE COMM IS NOT NULL);
+
+-- Result: SALES
+
+-- 16. WAQTD LOC OF EMP IF THEY EARN COMMISSION IN DEPARTMENT NUMBER 40
+SELECT LOC
+FROM DEPT
+WHERE DEPTNO = 40 AND DEPTNO IN ( SELECT DEPTNO
+                                  FROM EMP
+                                  WHERE COMM IS NOT NULL);
+
+-- Result: no rows selected
+
+-- 17. WAQTD NAME OF THE EMP EARNING MAX SAL
+SELECT ENAME
+FROM EMP
+WHERE SAL = ( SELECT MAX(SAL)
+              FROM EMP);
+
+-- Result: KING
